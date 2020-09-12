@@ -1,13 +1,15 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var items = require('../database-mongo');
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const db = require('../db');
+const PORT = 3033;
 
-var app = express();
+const app = express();
 
-app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(express.static(path.join(__dirname, '/../client/dist')));
 
-app.get('/items', function (req, res) {
-  items.selectAll(function (err, data) {
+app.get('/users', function (req, res) {
+  db.getAllUsers(function (err, data) {
     if (err) {
       res.sendStatus(500);
     } else {
@@ -16,7 +18,6 @@ app.get('/items', function (req, res) {
   });
 });
 
-app.listen(3000, function () {
-  console.log('listening on port 3000!');
+app.listen(PORT, function () {
+  console.log(`listening on port ${PORT}!`);
 });
-
