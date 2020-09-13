@@ -5,17 +5,19 @@ const App = () => {
   // users state
   const [users, setUsers] = useState([]);
   // current user state
-  const [currentUser, setCurrentUser] = useState('');
+  const [currentUser, setCurrentUser] = useState('James');
   const [fastestTime, setFastestTime] = useState([]);
 
   // GET users
   // set users state
   const getUsers = () => {
+    console.log('getUsers');
     axios.get('/users')
       .then((res) => {
-        setUsers(res.data)
+        console.log(res)
+        // setUsers(res.data)
       })
-      .catch(console.log)
+      .catch((err) => { console.log('err, from server', err) })
   }
 
   // USERS
@@ -29,6 +31,7 @@ const App = () => {
 
   return (
     <div>
+      {console.log(users)}
       <h1>REACTion Time</h1>
       <div>Users</div>
       <div>Add user</div>
