@@ -46,7 +46,7 @@ const App = () => {
         <h3>Users</h3>
         <Users users={allUsers} />
         <h3>Add user</h3>
-        <button onClick={() => setPlayTime(!playTime)}>PLAY</button>
+        <button onClick={() => setPlayTime(!playTime)}>READY</button>
       </div>
   } else if (playTime && !quit) {
     screen =
