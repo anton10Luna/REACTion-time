@@ -4,7 +4,6 @@ const Game = (props) => {
 
   return (
     <div>
-      {console.log(props)}
       <h1>GAME TIME</h1>
       <div>User Name</div>
       <div>Fastest Time:</div>
@@ -13,11 +12,8 @@ const Game = (props) => {
       <button>Ready</button>
       <button>Set</button>
       <button>GO!</button>
-      <button >Quit</button>
     </div>
   )
 }
 
 export default Game;
-
-// onClick={() => props.toggle.toggleQuit()}

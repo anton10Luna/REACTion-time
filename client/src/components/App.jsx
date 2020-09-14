@@ -5,7 +5,6 @@ import Game from './Game.jsx';
 import EndScreen from './EndScreen.jsx';
 
 const App = () => {
-  // users state
   const [allUsers, setAllUsers] = useState([]);
   const [fastestTime, setFastestTime] = useState('');
   const [fastestUser, setFastestUser] = useState('');
@@ -14,28 +13,21 @@ const App = () => {
   const [playTime, setPlayTime] = useState(false);
   const [quit, setQuit] = useState(false);
 
-  // GET users
-  // set users state
   const getUsers = () => {
     console.log('getUsers');
     axios.get('/users')
       .then((res) => {
         let usersArray = res.data
-        // console.log(res.data)
         setAllUsers(usersArray)
       })
       .catch((err) => { console.log('err, from server', err) })
   };
 
   // handleUserSelection
-  //
 
   const handlePlayCLick = () => {
     setPlayTime(!playTime)
   };
-
-  // const toggleQuit = () => (setQuit(!quit));
-  // set play state to true
 
   // USERS
   // show a list of users
@@ -47,9 +39,7 @@ const App = () => {
   useEffect(() => { getUsers() }, []);
 
   let screen;
-  if (playTime && !quit) {
-    screen = <Game />
-  } else if (!playTime && !quit) {
+  if (!playTime && !quit) {
     screen =
       <div>
         <h1>REACTion Time</h1>
@@ -58,8 +48,23 @@ const App = () => {
         <h3>Add user</h3>
         <button onClick={() => setPlayTime(!playTime)}>PLAY</button>
       </div>
-  } else if (!playTime && quit) {
-    screen = <EndScreen />
+  } else if (playTime && !quit) {
+    screen =
+      <div>
+        <Game />
+        <button onClick={() => setQuit(!quit)}>Quit</button>
+      </div>
+  } else if (playTime && quit) {
+    screen =
+      <div>
+        <EndScreen />
+        <button onClick={() => {
+          setPlayTime(!playTime);
+          setQuit(!quit)
+        }}>
+          Home
+        </button>
+      </div>
   }
 
   return (
