@@ -8,7 +8,7 @@ const App = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [fastestTime, setFastestTime] = useState('');
   const [fastestUser, setFastestUser] = useState('');
-  const [userSelected, setuserSelected] = useState('');
+  const [userSelected, setUserSelected] = useState('');
   const [userFastestTime, setUserFastestTime] = useState('');
   const [playTime, setPlayTime] = useState(false);
   const [quit, setQuit] = useState(false);
@@ -23,18 +23,14 @@ const App = () => {
       .catch((err) => { console.log('err, from server', err) })
   };
 
-  // handleUserSelection
-
   const handlePlayCLick = () => {
     setPlayTime(!playTime)
   };
 
-  // USERS
-  // show a list of users
-
-  // ADD USER
-  // show form
-  // add new user
+  const handleUserSelect = (user) => {
+    console.log(user);
+    setUserSelected('');
+  };
 
   useEffect(() => { getUsers() }, []);
 
@@ -43,8 +39,7 @@ const App = () => {
     screen =
       <div>
         <h1>REACTion Time</h1>
-        <h3>Users</h3>
-        <Users users={allUsers} />
+        <Users users={allUsers} userChange={handleUserSelect} user={userSelected} />
         <h3>Add user</h3>
         <button onClick={() => setPlayTime(!playTime)}>READY</button>
       </div>
