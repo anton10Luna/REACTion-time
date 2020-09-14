@@ -22,7 +22,11 @@ const Game = (props) => {
     setLapTime(lastLap);
     if (lastLap > 0 && lastLap < fastetGameTime) {
       setFastestGameTime(lastLap);
+      props.saveFastestTime(lastLap);
     }
+    let records = [...timeRecords, lastLap];
+    setTimeRecords(records);
+    props.saveTimeRecords(records);
     toggleReady();
     toggleOButton();
     setEndTime(0);

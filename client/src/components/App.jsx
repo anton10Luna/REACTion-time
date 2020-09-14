@@ -13,6 +13,7 @@ const App = () => {
   const [playTime, setPlayTime] = useState(false);
   const [quit, setQuit] = useState(false);
   const [addNewUser, setAddNewUser] = useState(false);
+  const [timeRecords, setTimeRecords] = useState([]);
 
   const getUsers = () => {
     axios.get('/users')
@@ -37,9 +38,15 @@ const App = () => {
 
   const moveToPlayScreen = () => {
     setPlayTime(!playTime);
-    // toggleAddNewUser();
   };
 
+  const trackUserFastestTime = (time) => {
+    setUserFastestTime(time);
+  };
+
+  const trackTimeRecords = (newRecords) => {
+    setTimeRecords(newRecords);
+  };
 
   useEffect(() => { getUsers() }, []);
 
@@ -54,13 +61,13 @@ const App = () => {
   } else if (playTime && !quit) {
     screen =
       <div>
-        <Game user={userSelected} />
+        <Game user={userSelected} saveFastestTime={trackUserFastestTime} saveTimeRecords={trackTimeRecords} />
         <button onClick={() => setQuit(!quit)}>Quit</button>
       </div>
   } else if (playTime && quit) {
     screen =
       <div>
-        <EndScreen />
+        <EndScreen user={userSelected} fastestTime={userFastestTime} times={timeRecords} />
         <button onClick={() => {
           setPlayTime(!playTime);
           setQuit(!quit)
@@ -69,13 +76,6 @@ const App = () => {
         </button>
       </div>
   }
-
-  // if (addNewUser) {
-  //   screen =
-  //     <div>
-  //       Add new User
-  //     </div>
-  // }
 
   return (
     <div>
