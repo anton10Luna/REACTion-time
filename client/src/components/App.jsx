@@ -8,29 +8,38 @@ const App = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [fastestTime, setFastestTime] = useState('');
   const [fastestUser, setFastestUser] = useState('');
-  const [userSelected, setUserSelected] = useState('');
+  const [userSelected, setUserSelected] = useState('Guest');
   const [userFastestTime, setUserFastestTime] = useState('');
   const [playTime, setPlayTime] = useState(false);
   const [quit, setQuit] = useState(false);
+  const [addNewUser, setAddNewUser] = useState(false);
 
   const getUsers = () => {
-    console.log('getUsers');
     axios.get('/users')
       .then((res) => {
         let usersArray = res.data
         setAllUsers(usersArray)
       })
-      .catch((err) => { console.log('err, from server', err) })
+      .catch((err) => { console.log('err, from server', err) });
   };
 
   const handlePlayCLick = () => {
-    setPlayTime(!playTime)
+    setPlayTime(!playTime);
   };
 
   const handleUserSelect = (user) => {
-    console.log(user);
-    setUserSelected('');
+    setUserSelected(user);
   };
+
+  const toggleAddNewUser = () => {
+    setAddNewUser(!addNewUser);
+  };
+
+  const moveToPlayScreen = () => {
+    setPlayTime(!playTime);
+    // toggleAddNewUser();
+  };
+
 
   useEffect(() => { getUsers() }, []);
 
@@ -39,14 +48,13 @@ const App = () => {
     screen =
       <div>
         <h1>REACTion Time</h1>
-        <Users users={allUsers} userChange={handleUserSelect} user={userSelected} />
-        <h3>Add user</h3>
-        <button onClick={() => setPlayTime(!playTime)}>READY</button>
+        <Users users={allUsers} userChange={handleUserSelect} user={userSelected} newUser={toggleAddNewUser} />
+        <button onClick={() => moveToPlayScreen()}>READY</button>
       </div>
   } else if (playTime && !quit) {
     screen =
       <div>
-        <Game />
+        <Game user={userSelected} />
         <button onClick={() => setQuit(!quit)}>Quit</button>
       </div>
   } else if (playTime && quit) {
@@ -61,6 +69,13 @@ const App = () => {
         </button>
       </div>
   }
+
+  // if (addNewUser) {
+  //   screen =
+  //     <div>
+  //       Add new User
+  //     </div>
+  // }
 
   return (
     <div>

@@ -59,7 +59,7 @@ const Game = (props) => {
   return (
     <div>
       <h1>GAME TIME</h1>
-      <div>User Name:</div>
+      <div>User Name: {props.user}</div>
       <div>Fastest Time: {fastetGameTime < 999999999 ? fastetGameTime : ''}</div>
       <div>Last Time: {lapTime}</div>
       <h1>TIME</h1>
