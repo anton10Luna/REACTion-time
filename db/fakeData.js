@@ -1,6 +1,11 @@
 module.exports = {
   users: [
     {
+      userName: 'Guest',
+      personalBest: 0,
+      allTimes: []
+    },
+    {
       userName: 'Juan',
       personalBest: 4567,
       allTimes: [4567, 8768, 5678, 1888]

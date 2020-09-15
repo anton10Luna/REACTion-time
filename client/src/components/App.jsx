@@ -55,12 +55,15 @@ const App = () => {
     screen =
       <div>
         <h1>REACTion Time</h1>
+        <div>{userSelected}</div>
         <Users users={allUsers} userChange={handleUserSelect} user={userSelected} newUser={toggleAddNewUser} />
         <button onClick={() => moveToPlayScreen()}>READY</button>
+
       </div>
   } else if (playTime && !quit) {
     screen =
       <div>
+
         <Game user={userSelected} saveFastestTime={trackUserFastestTime} saveTimeRecords={trackTimeRecords} />
         <button onClick={() => setQuit(!quit)}>Quit</button>
       </div>

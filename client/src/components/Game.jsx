@@ -8,6 +8,7 @@ const Game = (props) => {
   const [clickedO, setClickedO] = useState(false);
   const [endTime, setEndTime] = useState(0);
   const [lapTime, setLapTime] = useState(0);
+  const [isGoClicked, setIsGoClicked] = useState(false);
 
   const toggleReady = () => {
     setReady(!ready);
@@ -34,13 +35,24 @@ const Game = (props) => {
   }
   const goClicked = () => {
     setGoTime(Date.now());
+    setIsGoClicked(!isGoClicked);
   };
 
   const oClicked = () => {
     setEndTime(Date.now());
+    setIsGoClicked(!isGoClicked);
   };
 
-  let buttons;
+  let buttons, target;
+  if (isGoClicked) {
+    target =
+      <button onClick={() => { oClicked(); toggleOButton() }}>
+        O
+      </button>
+  } else {
+    target = <div></div>
+  }
+
   if (!ready && !clickedO) {
     buttons = <button onClick={() => toggleReady()}>SET</button>
   } else if (ready && !clickedO) {
@@ -49,9 +61,7 @@ const Game = (props) => {
         <button onClick={() => goClicked()}>
           GO!
         </button>
-        <button onClick={() => { oClicked(); toggleOButton() }}>
-          O
-        </button>
+        {target}
       </div>
   } else if (ready && clickedO) {
     buttons =
@@ -73,72 +83,3 @@ const Game = (props) => {
 }
 
 export default Game;
-
-
-// const Game = (props) => {
-//   const [fastetPlayTime, setFastestPlayTime] = useState('');
-//   const [ready, setReady] = useState(false);
-//   const [setButton, setSetButton] = useState(false);
-//   const [setTime, setSetTime] = useState('');
-//   const [goButton, setGoButton] = useState(false);
-//   const [goTime, setGoTime] = useState('');
-//   const [lapTime, setLapTime] = useState('');
-
-//   const getFastestTime = () => {
-//     console.log('fastest time: ', fastetPlayTime)
-//   };
-
-//   const recordSetTime = () => {
-//     setSetTime(Date.now());
-//   };
-
-//   const recordGoTime = () => {
-//     setGoTime(Date.now());
-//   }
-
-//   // let buttons, start, end;
-//   // let lap = end - start;
-
-//   const getLapTime = () => {
-//     console.log('lap time: ', start - end)
-//   };
-
-//   if (!ready) {
-//     buttons = <button onClick={() => setReady(!ready)}>SET</button>
-//   } else if (ready) {
-//     buttons =
-//       <div>
-//         <button onClick={() => {
-//           console.log(Date.now());
-//           start = Date.now();
-//           console.log('\nstart: ', start);
-//           console.log('lap in set: ', lap);
-//           console.log('lap func in Set: ', getLapTime());
-//           recordSetTime();
-//           setSetTime(Date.now());
-//           console.log(setTime)
-//           setSetButton(true);
-//         }}>
-//           GO!
-//         </button>
-//         <button onClick={() => {
-//           if (setButton) {
-//             console.log(Date.now());
-//             end = Date.now();
-//             console.log('start in go: ', start);
-//             console.log('end: ', end);
-//             // lap = end - start;
-//             console.log('lap in go: ', lap);
-//             console.log('lap func in Go: ', getLapTime());
-//             // recordGoTime();
-//             setSetButton(false);
-//             getFastestTime();
-//             getLapTime();
-//             console.log(setTime)
-//             setReady(!ready);
-//           }
-//         }}>
-//           O
-//         </button>
-//       </div >
-//   }

@@ -5,7 +5,10 @@ mongoose.connect('mongodb://localhost/reaction_time');
 
 
 const userSchema = mongoose.Schema({
-  userName: String,
+  userName: {
+    type: String,
+    unique: true
+  },
   personalBest: Number,
   allTimes: Array
 });
@@ -29,18 +32,6 @@ module.exports = { User };
 // };
 
 // insetUsers(fakeData.users);
-// let Pablo = new User({
-//   userName: "Pablo"
-// });
-
-// Pablo.save((err) => {
-//   if(err) {
-//     console.log('err saving in db', err);
-//   } else {
-//     console.log('user saved')
-//   }
-// });
-
 
 // TO CLEAR ALL DATA
 // User.remove({}, (err) => {
@@ -60,29 +51,3 @@ module.exports = { User };
 //     console.log('these are this many docs: ', dbLength)
 //   }
 // })
-
-// const db = mongoose.connection;
-
-// db.on('error', function () {
-//   console.log('mongoose connection error');
-// });
-
-// db.once('open', function () {
-//   console.log('mongoose connected successfully');
-// });
-
-
-
-// const Item = mongoose.model('Item', itemSchema);
-
-// const selectAll = function (callback) {
-//   Item.find({}, function (err, items) {
-//     if (err) {
-//       callback(err, null);
-//     } else {
-//       callback(null, items);
-//     }
-//   });
-// };
-
-// module.exports.selectAll = selectAll;

@@ -10,7 +10,7 @@ const EndScreen = (props) => {
     <div>
       <div>EndScreen</div>
       <div>USER: {props.user}</div>
-      <div>toodays's best: {props.fastestTime}</div>
+      <div>todays's best: {props.fastestTime}</div>
       <div>Times:</div>
       {props.times.map(time => <Time time={time} key={time.toString()} />)}
     </div>
