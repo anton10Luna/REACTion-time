@@ -3,6 +3,7 @@ import axios from 'axios';
 import Users from './Users.jsx';
 import Game from './Game.jsx';
 import EndScreen from './EndScreen.jsx';
+import css from './../styles/App.scss'
 
 const App = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -113,7 +114,7 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className={css.app}>
       {screen}
     </div>
   )
