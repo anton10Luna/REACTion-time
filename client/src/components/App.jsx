@@ -24,6 +24,21 @@ const App = () => {
       .catch((err) => { console.log('err, from server', err) });
   };
 
+  const updateUser = (userObj) => {
+    axios.post('/user', userObj)
+      .then(res => console.log)
+      .catch(err => console.log);
+  };
+
+  const getCurrentUserInfo = () => {
+    let userToSet = allUsers.filter(user => {
+      return user.userName === userSelected
+    });
+    userToSet = userToSet.length === 0 ? [{ personalBest: 0, allTimes: 0 }] : userToSet;
+    setUserFastestTime(userToSet[0].personalBest ? userToSet[0].personalBest : 0);
+    setTimeRecords(userToSet[0].allTimes ? userToSet[0].allTimes : []);
+  };
+
   const handlePlayCLick = () => {
     setPlayTime(!playTime);
   };
@@ -39,6 +54,7 @@ const App = () => {
   const moveToPlayScreen = () => {
     setPlayTime(!playTime);
     setAddNewUser(false);
+    getCurrentUserInfo();
   };
 
   const trackUserFastestTime = (time) => {
@@ -47,6 +63,15 @@ const App = () => {
 
   const trackTimeRecords = (newRecords) => {
     setTimeRecords(newRecords);
+  };
+
+  const moveToQuitScreen = () => {
+    updateUser({
+      userName: userSelected,
+      personalBest: userFastestTime,
+      allTimes: timeRecords
+    });
+    setQuit(!quit);
   };
 
   useEffect(() => { getUsers() }, []);
@@ -63,13 +88,21 @@ const App = () => {
   } else if (playTime && !quit) {
     screen =
       <div>
-        <Game user={userSelected} saveFastestTime={trackUserFastestTime} saveTimeRecords={trackTimeRecords} />
-        <button onClick={() => setQuit(!quit)}>Quit</button>
+        <Game
+          user={userSelected}
+          saveFastestTime={trackUserFastestTime}
+          saveTimeRecords={trackTimeRecords}
+          timeRecords={timeRecords}
+          setTimeRecords={setTimeRecords}
+          userFastestTime={userFastestTime}
+          setUserFastestTime={setUserFastestTime}
+        />
+        <button onClick={() => moveToQuitScreen()}>Quit</button>
       </div>
   } else if (playTime && quit) {
     screen =
       <div>
-        <EndScreen user={userSelected} fastestTime={userFastestTime} times={timeRecords} />
+        <EndScreen user={userSelected} fastestTime={userFastestTime} times={timeRecords} post={updateUser} />
         <button onClick={() => {
           setPlayTime(!playTime);
           setQuit(!quit)

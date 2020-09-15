@@ -43,11 +43,11 @@ module.exports = { User };
 // })
 
 // TO DISPLAY ALL DATA
-// User.find({}, (err, products) => {
-//   if (err) {
-//     console.log(err)
-//   } else {
-//     let dbLength = products.length;
-//     console.log('these are this many docs: ', dbLength)
-//   }
-// })
+User.find({}, (err, users) => {
+  if (err) {
+    console.log(err)
+  } else {
+    let dbLength = users.length;
+    console.log('these are this many docs: ', dbLength, '\n', users)
+  }
+})

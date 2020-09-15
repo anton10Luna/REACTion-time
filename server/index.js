@@ -23,6 +23,23 @@ app.get('/users', (req, res) => {
     } else {
       res.status(200).send(users);
     }
+    console.log(users);
+  });
+});
+
+app.post('/user', (req, res) => {
+  console.log('POST in the server: ', req.body);
+  let info = req.body;
+  let userName = req.body.userName;
+  let personalBest = req.body.personalBest;
+  let allTimes = req.body.allTimes;
+  db.User.findOneAndUpdate({ userName }, { $set: { personalBest, allTimes } }, { useFindAndModify: false }, (err, answer) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(console.log('good post in db'))
+    };
+    console.log('err: ', err, '\nres: ', answer)
   });
 });
 

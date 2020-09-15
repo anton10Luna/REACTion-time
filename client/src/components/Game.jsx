@@ -21,11 +21,18 @@ const Game = (props) => {
   const getLapTime = () => {
     let lastLap = endTime - goTime;
     setLapTime(lastLap);
-    if (lastLap > 0 && lastLap < fastetGameTime) {
-      setFastestGameTime(lastLap);
+    // if (lastLap > 0 && lastLap < fastetGameTime) {
+    // if (lastLap >= 0 && lastLap < props.userFastestTime) {
+    if (props.userFastestTime === 0) {
+      props.setUserFastestTime(lastLap);
+      props.saveFastestTime(lastLap);
+    } else if (props.userFastestTime !== 0 && lastLap < props.userFastestTime) {
+      // setFastestGameTime(lastLap);
+      props.setUserFastestTime(lastLap)
       props.saveFastestTime(lastLap);
     }
-    let records = [...timeRecords, lastLap];
+    // let records = [...timeRecords, lastLap];
+    let records = [...props.timeRecords, lastLap];
     setTimeRecords(records);
     props.saveTimeRecords(records);
     toggleReady();
@@ -74,7 +81,8 @@ const Game = (props) => {
     <div>
       <h1>GAME TIME</h1>
       <div>User Name: {props.user}</div>
-      <div>Fastest Time: {fastetGameTime < 999999999 ? fastetGameTime : ''}</div>
+      {/* <div>Fastest Time: {fastetGameTime < 999999999 ? fastetGameTime : ''}</div> */}
+      <div>Fastest Time: {props.userFastestTime ? props.userFastestTime : ''}</div>
       <div>Last Time: {lapTime}</div>
       <h1>TIME</h1>
       {buttons}
