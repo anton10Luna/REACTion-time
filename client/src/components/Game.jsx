@@ -82,8 +82,8 @@ const Game = (props) => {
       <h1>GAME TIME</h1>
       <div>User Name: {props.user}</div>
       {/* <div>Fastest Time: {fastetGameTime < 999999999 ? fastetGameTime : ''}</div> */}
-      <div>Fastest Time: {props.userFastestTime ? props.userFastestTime : ''}</div>
-      <div>Last Time: {lapTime}</div>
+      <div>Fastest Time: {props.userFastestTime ? props.userFastestTime : ''} ms</div>
+      <div>Last Time: {lapTime} ms</div>
       <h1>TIME</h1>
       {buttons}
     </div>

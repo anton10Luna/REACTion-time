@@ -33,7 +33,7 @@ app.post('/user', (req, res) => {
   let userName = req.body.userName;
   let personalBest = req.body.personalBest;
   let allTimes = req.body.allTimes;
-  db.User.findOneAndUpdate({ userName }, { $set: { personalBest, allTimes } }, { useFindAndModify: false }, (err, answer) => {
+  db.User.findOneAndUpdate({ userName }, { $set: { personalBest, allTimes } }, { useFindAndModify: false, upsert: true }, (err, answer) => {
     if (err) {
       res.status(500).send(err);
     } else {
